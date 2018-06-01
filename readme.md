@@ -5,22 +5,23 @@
 ### scaricare kafka eseguibile .tgz versione 1.0.1
 
 ### esempio estraggo tar e salvo in :
-### salvo in C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/
+### salvo in C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/ E trovo gli eseguibili in /bin/windows/
+``` cd C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/bin/windows/ ```
 
 ### eseguo dal lina di comando:
 ### 1) avvio zookeeper
-``` C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/bin/windows/zookeeper-server-start.bat C:\ProgrammiStandalone\kafka-1.1.0\kafka_2.11-1.1.0\config\zookeeper.properties ```
+``` zookeeper-server-start.bat C:\ProgrammiStandalone\kafka-1.1.0\kafka_2.11-1.1.0\config\zookeeper.properties ```
 
 ### 2) avvio kafka broker
-``` C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/bin/windows/kafka-server-start.bat C:\ProgrammiStandalone\kafka-1.1.0\kafka_2.11-1.1.0\config\server.properties ```
+``` kafka-server-start.bat C:\ProgrammiStandalone\kafka-1.1.0\kafka_2.11-1.1.0\config\server.properties ```
 
 ### 3) creo la mia topic
-``` C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/bin/windows/kafka-topics.bat --zookeeper localhost:2128 --replication-factor 1 --partitions 1 --topic doc-event-handler ```
+``` kafka-topics.bat --zookeeper localhost:2128 --replication-factor 1 --partitions 1 --topic doc-event-handler ```
 
 ### 4) compilare il progetto con maven
 ``` mvn clean install ```
 
-### 5) avviare ils erver wilsfly
+### 5) avviare ils erver wildfly 9 o 10
 ``` eseguire standalone.bat ```
 
 ### 6) fare il deploy su wildfly
@@ -35,6 +36,8 @@
 
 
 per provare manualmente una volta tirato su il broker e zookeeper:
+
+``` cd C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/bin/windows/ ```
 
 ### 1) la topic TEST va prima creata con
 ``` kafka-topics.bat --create --zookeeper localhost:2181 --replication-factor 1 --partitions 1 --topic TEST ```
