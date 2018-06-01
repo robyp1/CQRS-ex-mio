@@ -55,9 +55,10 @@ public class DocumentCreatorBean {
             em.persist(finalEventState);
 
             DocEvent docEvent = new DocEvent(documentEntity.getId());
+            //invio evento come msg alla topic
             eventProducer.publish(docEvent);
 
-            //            throw new RuntimeException("Ops! runtime ex forzata per provare che ha terminato la transazione interna e ha fatto rollback solo di questa");
+            //throw new RuntimeException("Ops! runtime ex forzata per provare che ha terminato la transazione interna e ha fatto rollback solo di questa");
             //quella interna salva cmq i riferimenti al pdf che è stato completato, ci perdiamo solo l'evento di comunicazione al front-end
 
         } catch (Exception e) {

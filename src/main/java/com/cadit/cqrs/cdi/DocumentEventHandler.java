@@ -64,7 +64,7 @@ public class DocumentEventHandler /*implements ServletContextListener*/ {
         consumerkafkaProperties.put(ConsumerConfig.GROUP_ID_CONFIG, groupID);
 
         //polling event dalla topic
-        eventConsumer = new EventConsumer(consumerkafkaProperties, new ActionWrapper(), topic_name);
+        eventConsumer = new EventConsumer(consumerkafkaProperties, new ActionWrapper(events), topic_name);
 
         mes.execute(eventConsumer);
     }

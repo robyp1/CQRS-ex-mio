@@ -32,7 +32,7 @@ public class EventProducer {
     Properties kafkaProperties;
 
 
-    Logger log = Logger.getLogger(this.getClass().getName());
+    private Logger log = Logger.getLogger(this.getClass().getName());
     private AtomicInteger count = new AtomicInteger(0);
 
     @PostConstruct

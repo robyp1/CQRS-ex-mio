@@ -7,8 +7,7 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 
-import javax.enterprise.event.Event;
-import javax.inject.Inject;
+import javax.enterprise.context.ApplicationScoped;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
@@ -22,8 +21,6 @@ public class EventConsumer implements Runnable{
 //    private final KafkaConsumer<String, DocEvent> consumer;
     private final KafkaConsumer<String, String> consumer;
 
-    @Inject
-    Event<DocEvent> event;
 
     private AtomicBoolean closed = new AtomicBoolean();
     private Logger log = Logger.getLogger(this.getClass().getName());
@@ -60,7 +57,8 @@ public class EventConsumer implements Runnable{
 //        for (ConsumerRecord<String, DocEvent> record : records) {
         for (ConsumerRecord<String, String> record : records) {
             printConsumerInfo(record);
-//            eventConsumer.accept(event,record.value()); scommentare!
+            DocEvent docEvent = new DocEvent(Integer.valueOf(record.value()));
+            eventConsumer.accept(docEvent);
         }
         consumer.commitAsync();
 //        consumer.commitSync();
