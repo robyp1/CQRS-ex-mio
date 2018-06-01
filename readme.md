@@ -48,5 +48,23 @@ per provare manualmente una volta tirato su il broker e zookeeper:
 ### 3) legge dalla topic test
 ``` kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic TEST --from-beginning ```
 
+## Link utili
+* https://kafka.apache.org/quickstart
+* http://cloudurable.com/blog/kafka-architecture-consumers/index.html
+* https://dzone.com/articles/kafka-producer-in-java
+* https://dzone.com/articles/writing-a-kafka-consumer-in-java?fromrel=true
+* https://www.ibm.com/support/knowledgecenter/en/SSZJPZ_11.7.0/com.ibm.swg.im.iis.conn.kafka.usage.doc/topics/Setting_kafka_connector.html
+* https://kafka.apache.org/documentation/#connect
+* https://www.confluent.io/blog/transactions-apache-kafka/
+* http://notes.stephenholiday.com/Kafka.pdf
+
+## altro
+* https://dzone.com/articles/java-ee6-events-lightweight
+* https://docs.oracle.com/javaee/7/tutorial/cdi-adv005.htm
+* http://entjavastuff.blogspot.com/2011/02/ejb-transaction-management-going-deeper.html
+
+## examples:
+* https://github.com/sdaschner/scalable-coffee-shop
+
 
 
