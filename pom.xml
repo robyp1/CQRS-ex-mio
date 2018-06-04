@@ -68,7 +68,7 @@
             <!--<scope>provided</scope>-->
         </dependency>
 
-        <dependency>
+        <dependency> <!-- per serializer deserializer che per ora e' ko-->
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.9.5</version>

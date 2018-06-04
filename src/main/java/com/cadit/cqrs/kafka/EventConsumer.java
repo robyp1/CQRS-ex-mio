@@ -13,7 +13,15 @@ import java.util.logging.Logger;
 
 import static java.util.Arrays.asList;
 
-
+/**
+ * Ogni consumer ha il suo consumer-ID per consumare da tutte le partizioni
+ * Altrimenti specificare le partizioni per consumer:
+ *
+ *   String topic = "nome della topic";
+ *        TopicPartition partition0 = new TopicPartition(topic, 0);
+ *        TopicPartition partition1 = new TopicPartition(topic, 1);
+ *        consumer.assign(Arrays.asList(partition0, partition1));
+ */
 public class EventConsumer implements Runnable{
 
     private final ActionWrapper eventConsumer;
@@ -27,7 +35,7 @@ public class EventConsumer implements Runnable{
     public EventConsumer(Properties kafkaProperties, ActionWrapper eventConsumer, String... topics) {
         this.eventConsumer = eventConsumer;
         consumer = new KafkaConsumer(kafkaProperties);
-        consumer.subscribe(asList(topics));
+        consumer.subscribe(asList(topics)); //lista delle topic
     }
 
 
@@ -74,5 +82,23 @@ public class EventConsumer implements Runnable{
         closed.set(true);
         consumer.wakeup();
     }
+
+
+
+    /**
+     * funzionerà? Assegno le partizioni a mano per consumer.
+     * Come assegno invece
+     * dal producer la partizione a cui scrivere
+     * @param topics
+     */
+//    public void assignPartitionperTopicToConsumer(String... topics){
+//        List<String> topicList = (List<String>) asList(topics);
+//        //lista delle partizioni: http://cloudurable.com/blog/kafka-tutorial-kafka-producer-advanced-java-examples/index.html
+//        for (String topic : topicList){
+//            TopicPartition partitionPerEvento1 = new TopicPartition(topic, 0);
+//            TopicPartition partitionPerEvento2 = new TopicPartition(topic, 1);
+//            consumer.assign(asList(partitionPerEvento1, partitionPerEvento2));
+//        }
+//    }
 
 }

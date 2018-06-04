@@ -2,6 +2,10 @@ package com.cadit.cqrs.data;
 
 import java.util.GregorianCalendar;
 
+/**
+ * non usata, per ora  l'evento è DocEvent
+ */
+@Deprecated
 public class PdfDocEvent extends DocEvent{
 
 

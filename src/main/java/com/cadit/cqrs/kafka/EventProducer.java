@@ -54,7 +54,7 @@ public class EventProducer {
         try {
 //            producer.beginTransaction();
 //            Future<RecordMetadata> result = producer.send(record);
-            Future<RecordMetadata> result = producer.send(record);
+            Future<RecordMetadata> result = producer.send(record); //asincrono and thread-safe
             try {
                 RecordMetadata recordMetadata = result.get(); //questo è bloccante perchè get sul Future
                 printProducerDebugInfo(time, recordMetadata, record);
