@@ -23,7 +23,7 @@ public class DocumentCreator {
     EntityManager em;
 
     /**
-     * Salva i riferimenti al documento creato
+     * Salva i riferimenti al documento creato in una transazione a parte
      * @param docType
      * @return
      * @throws InterruptedException

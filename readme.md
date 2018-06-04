@@ -57,6 +57,7 @@ per provare manualmente una volta tirato su il broker e zookeeper:
 * https://kafka.apache.org/documentation/#connect
 * https://www.confluent.io/blog/transactions-apache-kafka/
 * http://notes.stephenholiday.com/Kafka.pdf
+* https://dzone.com/articles/kafka-clients-at-most-once-at-least-once-exactly-o
 
 ## altro
 * https://dzone.com/articles/java-ee6-events-lightweight

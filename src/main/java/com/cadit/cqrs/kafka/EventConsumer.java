@@ -7,7 +7,6 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.errors.WakeupException;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.util.Properties;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.logging.Logger;
@@ -39,10 +38,9 @@ public class EventConsumer implements Runnable{
                 consume();
             }
         } catch (WakeupException e) {
-            // will wakeup for closing
+            //  wakeup Exception quando esternamente invoco close sul consumer (vedi stop sotto)
             e.printStackTrace();
         } catch (Exception e) {
-            // will wakeup for closing
             log.severe("si è verificata una Exception che non è una wakeupException! " + e.getMessage());
             e.printStackTrace();
         } finally {

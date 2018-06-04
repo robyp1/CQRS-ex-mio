@@ -92,8 +92,9 @@ public class DocumentEventHandler /*implements ServletContextListener*/ {
 
 
     /**
-     * metodo KO, questo bean viene messo nel pooling quando necessario non quando si ferma l'app server
-     * trovare un altro modo per fermare il consumer
+     * Quando si ferma l'app server o si fa l'undeploy il bean viene eliminato
+     * però il kafka consumer è attivo in un loop e quindi va fermato
+     *
      */
     @PreDestroy
     public void close() {

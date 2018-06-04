@@ -10,10 +10,10 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.wildfly.maven.plugin>1.0.2.Final</version.wildfly.maven.plugin>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>1.7</maven.compiler.source>
+        <maven.compiler.target>1.7</maven.compiler.target>
         <!--<failOnMissingWebXml>false</failOnMissingWebXml>-->
-        <jee.api.version>8.0</jee.api.version>
+        <jee.api.version>7.0</jee.api.version>
         <hibernate.version>5.0.0.Final</hibernate.version>
     </properties>
     <dependencies>

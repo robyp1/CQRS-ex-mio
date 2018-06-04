@@ -4,7 +4,6 @@ package com.cadit.cqrs.business;
 import com.cadit.cqrs.cdi.Configuration;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.PreDestroy;
 import javax.annotation.Resource;
 import javax.ejb.*;
 import javax.inject.Inject;
