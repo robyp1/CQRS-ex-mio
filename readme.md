@@ -58,14 +58,54 @@ per provare manualmente una volta tirato su il broker e zookeeper:
 * https://www.confluent.io/blog/transactions-apache-kafka/
 * http://notes.stephenholiday.com/Kafka.pdf
 * https://dzone.com/articles/kafka-clients-at-most-once-at-least-once-exactly-o
+* http://cloudurable.com/blog/kafka-tutorial-kafka-producer-advanced-java-examples/index.html
+* https://stackoverflow.com/questions/46492707/consumer-how-to-specify-partition-to-read-kafka
+* https://kafka.apache.org/0110/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html
 
 ## altro
 * https://dzone.com/articles/java-ee6-events-lightweight
 * https://docs.oracle.com/javaee/7/tutorial/cdi-adv005.htm
 * http://entjavastuff.blogspot.com/2011/02/ejb-transaction-management-going-deeper.html
+* https://curator.apache.org/curator-test/
 
 ## examples:
 * https://github.com/sdaschner/scalable-coffee-shop
 
 
+##PREPARARE WILDFLY
+Copiare il modulo org.hsql in modules/system/layers/base/org/hsql/main
+Il modo è costituito da :
+** module.xml
+** hsqldb.jar
+** -module.xml:
+```
+<module xmlns="urn:jboss:module:1.3" name="org.hsqldb">
 
+    <resources>
+        <resource-root path="hsqldb.jar"/>
+    </resources>
+    <dependencies>
+        <module name="javax.api"/>
+        <module name="javax.transaction.api"/>
+        <module name="javax.servlet.api" optional="true"/>
+    </dependencies>
+</module>
+```
+Andare in standalone/configuration/standalone.xml ed aggiungere il datasource e i riferimenti al driver:
+```
+ <datasource jta="true" jndi-name="java:jboss/jdbc/testDS" pool-name="testDS" enabled="true" use-java-context="true">
+        <connection-url>jdbc:hsqldb:hsql://localhost:9001/testDS</connection-url>
+        <driver>hsqldb</driver>
+        <security>
+            <user-name>sa</user-name>
+        </security>
+    </datasource>
+    <drivers>
+        ...
+        <driver name="hsqldb" module="org.hsqldb">
+            <driver-class>org.hsqldb.jdbc.JDBCDriver</driver-class>
+        </driver>
+    </drivers>
+```
+
+**- Scaricare il server hsql (stessa versione della libreria jar), eventualmente come client scaricare Squirell
