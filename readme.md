@@ -76,11 +76,11 @@ per provare manualmente una volta tirato su il broker e zookeeper:
 ## PREPARARE WILDFLY
 Copiare il modulo org.hsql in modules/system/layers/base/org/hsql/main.
 
-Il modo è costituito da :
+Il modulo è costituito da due file :
 ### module.xml
 ### hsqldb.jar
 
-### Contenuto module.xml:
+### Contenuto module.xml (libreria hsqldb stessa versione del pom) e dipendenze:
 ```
 <module xmlns="urn:jboss:module:1.3" name="org.hsqldb">
 
