@@ -2,13 +2,13 @@
 # PER CONFIGURARE L'APPLICAZIONE
 
 ## PREPARARE L'AMBIENTE CON KAFKA
-### scaricare kafka eseguibile .tgz versione 1.0.1
+### scaricare kafka eseguibile .tgz versione 1.1.0
 
 ### esempio estraggo tar e salvo in :
 ### salvo in C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/ E trovo gli eseguibili in /bin/windows/
 ``` cd C:/ProgrammiStandalone/kafka-1.1.0/kafka_2.11-1.1.0/bin/windows/ ```
 
-### eseguo dal lina di comando:
+### eseguo dal linea di comando:
 ### 1) avvio zookeeper
 ``` zookeeper-server-start.bat C:\ProgrammiStandalone\kafka-1.1.0\kafka_2.11-1.1.0\config\zookeeper.properties ```
 
