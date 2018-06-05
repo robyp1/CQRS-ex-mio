@@ -21,8 +21,8 @@
 ### 4) compilare il progetto con maven
 ``` mvn clean install ```
 
-### 5) avviare ils erver wildfly 9 o 10
-``` eseguire standalone.bat ```
+### 5) avviare il server wildfly 10 da linea di comando, andare in /bin ed eseguire
+``` standalone.bat ```
 
 ### 6) fare il deploy su wildfly (attenzione la porta 9090 deve essere libera altrimenti va fatto il deploy a mano o da pagina di management)
 ``` wildfly:deploy ```
