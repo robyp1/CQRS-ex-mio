@@ -23,7 +23,10 @@ public class DocumentCreator {
     EntityManager em;
 
     /**
-     * Salva i riferimenti al documento creato in una transazione a parte
+     * metodo simulato, dovrebbe chiamare una libreria per la crezione di documenti (Pdf, Excel..)
+     * Salva i riferimenti al documento creato in una transazione a parte (.REQUIRES_NEW)
+     * Alla uscita del metodo committa i riferimenti al pdf e dove è stato salvato ma l'evento che commita
+     * per ora è RUNNING perchè non lo ha ancora inviato alla topic
      * @param docType
      * @return
      * @throws InterruptedException
@@ -51,7 +54,7 @@ public class DocumentCreator {
         documentEntity.addEvent(initialEventState);
         documentEntity.setPath(infoPath);
         em.persist(documentEntity);
-        em.flush();
+        em.flush(); //verifico su db che non ci siano errori di constraints o di data truncation ecc...
         return  documentEntity.getId();
 
     }

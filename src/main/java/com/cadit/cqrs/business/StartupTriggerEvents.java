@@ -14,6 +14,8 @@ import java.util.logging.Logger;
  * *************************************************************************************************
  * ********************************************BACK-END*********************************************
  * *************************************************************************************************
+ * TRIGGER- TIMER- EJB SINGLETON inizializzato al deploy/inizializzazione dell'applicazione
+ * ******************************
  */
 @Singleton
 @Startup
@@ -34,7 +36,7 @@ public class StartupTriggerEvents {
     @Inject
     Configuration configuration;
 
-    @EJB
+    @EJB //potevo usare l'annotazione Inject ma per WAS uso EJB
     DocumentCreatorBean documentCreatorBean;
 
     @Resource
@@ -65,7 +67,7 @@ public class StartupTriggerEvents {
 
 
     @Timeout
-    @Lock(LockType.WRITE)
+    @Lock(LockType.WRITE) //synchronize gestito dal container , forse non necessario , da rivedere
     public void callService(Timer timer){
         //call to produce pdf document
         log.log(Level.INFO, "Trigger document creation");

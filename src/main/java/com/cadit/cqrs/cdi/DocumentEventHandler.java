@@ -21,10 +21,16 @@ import javax.inject.Inject;
 import java.util.Properties;
 import java.util.logging.Logger;
 
+/**
+ * *******************************************FRONT-END********************************
+ * Gestisce l'arrivo di un evento localmente
+ * EJB  singleton
+ * **************************************************************************************
+ */
 @Startup
 @Singleton
-//@WebListener
-public class DocumentEventHandler /*implements ServletContextListener*/ {
+//alternativa @WebListener e classe che implements ServletContextListener
+public class DocumentEventHandler {
 
     public static final String DOC_KAFKA_TOPIC_NAME = "DOC-KAFKA-TOPIC-NAME";
     public static final String DEFAULT_DOC_KAFKA_TOPIC_NAME = "doc-event-handler";
@@ -33,7 +39,7 @@ public class DocumentEventHandler /*implements ServletContextListener*/ {
     private EventConsumer eventConsumer;
 
     @Resource
-    ManagedExecutorService mes;
+    ManagedExecutorService mes; //non JEE6, JEE7 e sucessiva
 
     Properties kafkaProperties;
 
@@ -48,6 +54,10 @@ public class DocumentEventHandler /*implements ServletContextListener*/ {
     private String topic_name;
 
 
+    /**
+     * Handler su Event .fire
+     * @param event
+     */
     public void handle(@Observes DocEvent event) {
         log.info("E'' arrivato l'evento dalla topic " + event);
     }
@@ -56,9 +66,8 @@ public class DocumentEventHandler /*implements ServletContextListener*/ {
     @PostConstruct
     private void init() {
 
-
         topic_name = conf.getConf().getProperty(DOC_KAFKA_TOPIC_NAME, DEFAULT_DOC_KAFKA_TOPIC_NAME);
-
+        //istanzia il consumer
         Properties consumerkafkaProperties = getKafkaProperties();
         String groupID = conf.getConf().getProperty(DOC_KAFKA_TOPIC_GROUPID, DEFAULT_KAFKA_TOPIC_GROUPID);
         consumerkafkaProperties.put(ConsumerConfig.GROUP_ID_CONFIG, groupID);
@@ -70,6 +79,11 @@ public class DocumentEventHandler /*implements ServletContextListener*/ {
     }
 
 
+    /**
+     * Valorizza e restituisce le properties di base (comuni a consumer e Producer)
+     * Tipo di configurazione utilizzata AT-MOST-ONCE (autocommit abilitato e autocommit.interval.ms basso)
+     * @return
+     */
     @Produces
     @KafkaProperties
     public Properties getKafkaProperties() {
@@ -83,7 +97,8 @@ public class DocumentEventHandler /*implements ServletContextListener*/ {
 //        kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, DocEventSerializer.class.getName());
         kafkaProperties.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
 
-        //        kafkaProperties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true");
+        //        kafkaProperties.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, "true"); di default è a true come
+//        kafkaProperties.put(ConsumerConfig.AUTO_COMMIT_INTERVAL_MS_CONFIG, "5000"); di default è 5000, vedi doc akfka
         //lista dei server broker del cluster o del server ip:porta dove gira il server kafka (broker)
         kafkaProperties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
         kafkaProperties.put("topics.doc", topic_name);
@@ -93,7 +108,8 @@ public class DocumentEventHandler /*implements ServletContextListener*/ {
 
     /**
      * Quando si ferma l'app server o si fa l'undeploy il bean viene eliminato
-     * però il kafka consumer è attivo in un loop e quindi va fermato
+     * però il kafka consumer è attivo in un loop e quindi va fermato, o tramite thread interrupt
+     * oppure tramite WakeUpException (vedere metodo stop)
      *
      */
     @PreDestroy

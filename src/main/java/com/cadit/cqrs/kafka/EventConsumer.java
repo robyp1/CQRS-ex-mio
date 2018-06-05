@@ -14,13 +14,27 @@ import java.util.logging.Logger;
 import static java.util.Arrays.asList;
 
 /**
- * Ogni consumer ha il suo consumer-ID per consumare da tutte le partizioni
- * Altrimenti specificare le partizioni per consumer:
+ * ****************************************************FRONT-END*******************************************
+ * ********************************************************************************************************
+ * Ogni consumer ha il suo consumer-ID per leggere da tutte le partizioni (share delle partizioni)
+ * Per esempio provare a avviare un Comnsumer anche da linea di comando (che ha un consumer_id diverso):
+ *
+ * kafka_2.11-1.1.0\bin\windows> kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic TEST3 --from-beginning
+ * (--from-beginig torna indietro e legge dalla prima partizione, è opzionale )
+ * così vedi che legge gli stessi messaggi che legge anche da questo EventConsumer (ovvero l'id della stampa)
+ *
+ * Altrimenti è possbile specificare le partizioni per consumer  ( in tal caso arrivano messaggi distinti come se legessi da più topics):
+ * Oneroso avere più topic, potrebbe essere fattibile dividersi le partizioni?
+ * Se si fa sul consumer come fare ad assegnare anche ai producer una partizione di interesse?
+ * Zookeper si occupa proprio di bilanciare le partizioni tramite metodo round-robin
  *
  *   String topic = "nome della topic";
  *        TopicPartition partition0 = new TopicPartition(topic, 0);
  *        TopicPartition partition1 = new TopicPartition(topic, 1);
  *        consumer.assign(Arrays.asList(partition0, partition1));
+ *
+ *     Topic, partition files li trovate in C:\tmp\kafka-logs e i log di zookeper in c:\tmp\zookper
+ *     a meno che dalla configurazione che avete passato ai bat o sh abbiate specificato diversi percorsi
  */
 public class EventConsumer implements Runnable{
 
@@ -58,19 +72,16 @@ public class EventConsumer implements Runnable{
     }
 
     private void consume() {
-//        ConsumerRecords<String, DocEvent> records = consumer.poll(Long.MAX_VALUE); //not threadsafe!
-        ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE); //not threadsafe!
-//        for (ConsumerRecord<String, DocEvent> record : records) {
+        ConsumerRecords<String, String> records = consumer.poll(Long.MAX_VALUE); //not threadsafe! PULL MODE sulla topic
         for (ConsumerRecord<String, String> record : records) {
             printConsumerInfo(record);
             DocEvent docEvent = new DocEvent(Integer.valueOf(record.value()));
             eventConsumer.accept(docEvent);
         }
         consumer.commitAsync();
-//        consumer.commitSync();
+//        consumer.commitSync(); //solo per At-LEAST_ONCE, in questo caso non usato perchè uso l'autocommit
     }
 
-//    private void printConsumerInfo(ConsumerRecord<String, DocEvent> record) {
     private void printConsumerInfo(ConsumerRecord<String, String> record) {
         log.info( String.format("*C : Consumer Record:(%s, %s, %d, %d)",
                 record.key(), record.value(),
@@ -87,8 +98,8 @@ public class EventConsumer implements Runnable{
 
     /**
      * funzionerà? Assegno le partizioni a mano per consumer.
-     * Come assegno invece
-     * dal producer la partizione a cui scrivere
+     * Come imposto invece
+     * dal producer la partizione a cui scrivere?
      * @param topics
      */
 //    public void assignPartitionperTopicToConsumer(String... topics){

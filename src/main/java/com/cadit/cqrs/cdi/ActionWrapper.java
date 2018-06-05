@@ -4,6 +4,13 @@ import com.cadit.cqrs.data.DocEvent;
 
 import javax.enterprise.event.Event;
 
+/**
+ * **********************************************API***********************************
+ * classe di comodo che riceve un evento ben definito e invoca l'handler locale
+ * @param <T>
+ * @param <C>
+ * ***********************************************************************************
+ */
 public class  ActionWrapper<T extends Event<C>,C extends DocEvent> {
 
 

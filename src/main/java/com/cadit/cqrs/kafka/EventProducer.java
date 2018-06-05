@@ -39,21 +39,19 @@ public class EventProducer {
     private void init() {
         Properties ProduceProperties = kafkaProperties;
         ProduceProperties.put(ProducerConfig.CLIENT_ID_CONFIG, "KafkaDocProducer");
-//        ProduceProperties.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "T1");
+//        ProduceProperties.put(ProducerConfig.TRANSACTIONAL_ID_CONFIG, "T1");  //solo pre configurazione at least-once, da verificare
 //        ProduceProperties.put(ProducerConfig.TRANSACTION_TIMEOUT_CONFIG, "40000");
 //        ProduceProperties.put(ProducerConfig.ENABLE_IDEMPOTENCE_CONFIG , "true");
         producer = new KafkaProducer(ProduceProperties);
         topic = kafkaProperties.getProperty("topics.doc");
-//        producer.initTransactions();
+//        producer.initTransactions();//solo pre configurazione
     }
 
     public void publish(DocEvent event) {
-//        ProducerRecord<String, DocEvent> record = new ProducerRecord(topic, String.valueOf("KafkaDocProducer-msg-" + (count.incrementAndGet())) , event);
         ProducerRecord<String, String> record = new ProducerRecord(topic, String.valueOf("KafkaDocProducer-msg-" + (count.incrementAndGet())) , String.valueOf(event.getDocumentID()));
         long time = System.currentTimeMillis();
         try {
-//            producer.beginTransaction();
-//            Future<RecordMetadata> result = producer.send(record);
+//            producer.beginTransaction();  //solo pre configurazione
             Future<RecordMetadata> result = producer.send(record); //asincrono and thread-safe
             try {
                 RecordMetadata recordMetadata = result.get(); //questo è bloccante perchè get sul Future
@@ -63,12 +61,12 @@ public class EventProducer {
             } catch (ExecutionException e) {
                 e.printStackTrace();
             }
-//            producer.commitTransaction();
+//            producer.commitTransaction();//solo pre configurazione, decido io di committare se non committo il messaggio viene rinviato dal producer
         } catch (ProducerFencedException e) {
             producer.flush();
             producer.close();
         } catch (KafkaException e) {
-//            producer.abortTransaction();
+//            producer.abortTransaction();//solo pre configurazione
             e.printStackTrace();
         }
     }

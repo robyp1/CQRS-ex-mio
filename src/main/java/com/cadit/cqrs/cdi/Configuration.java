@@ -6,8 +6,9 @@ import java.io.InputStream;
 import java.util.Properties;
 
 /**
- * Lettura da configurazione dell'applicazione
- * singleton inizializzato a lazy
+ * di utilità, ******API****
+ * Lettura properties configurazione dell'applicazione
+ * tipo un singleton lazy (inizializzato al primo inject)
  */
 @ApplicationScoped
 public class Configuration  {
